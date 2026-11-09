@@ -1,0 +1,34 @@
+/* Injected into Twitch's stand-alone player page (as a user stylesheet).
+   Twitch's controls, channel info, buttons and extension overlays all live in
+   the overlay layer; hide it and what remains is the video. Pane draws its own UI. */
+
+html,
+body {
+  background: #000 !important;
+  overflow: hidden !important;
+}
+
+::-webkit-scrollbar {
+  display: none !important;
+}
+
+.video-player__overlay,
+.extensions-video-overlay-size-container,
+[data-a-target='player-overlay-click-handler'],
+.consent-banner {
+  display: none !important;
+}
+
+video {
+  object-fit: contain !important;
+}
+
+/* Set by agent-core.js when the window already matches the video's shape. */
+html.pane-cover video {
+  object-fit: cover !important;
+}
+
+/* The ad blocker's own "Blocking ads" label (vendor/vaft.js); Pane shows nothing over the picture. */
+.adblock-overlay {
+  display: none !important;
+}
