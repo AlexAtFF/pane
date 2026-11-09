@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: pane-thumb: https://i.ytimg.com" />
+    <title>Pane</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="is-empty">
+    <!-- Covers the video: click = play/pause, double-click = full screen, drag = move window. -->
+    <div id="surface"></div>
+    <!-- Solid backdrop while there is no picture (start screen, loading, errors). -->
+    <div id="veil"></div>
+
+    <div id="spinner" aria-hidden="true"></div>
+    <div id="bezel" aria-hidden="true"><div class="bezel-icon"></div><div class="bezel-text"></div></div>
+
+    <div id="message" role="alert">
+      <p class="message-text"></p>
+      <button class="pill-btn" id="retry" type="button">Try again</button>
+      <button class="pill-btn primary" id="gate" type="button">Start watching</button>
+    </div>
+
+    <!-- Hover controls in the middle of the picture: back a few seconds, play/pause, forward. -->
+    <div id="center"><div class="group" data-slot="center"></div></div>
+
+    <header id="top">
+      <div class="group" data-slot="top-left"></div>
+      <div class="group" data-slot="top-right"></div>
+    </header>
+
+    <footer id="bottom">
+      <div id="seek" role="slider" aria-label="Seek">
+        <div class="seek-track">
+          <div class="seek-buffer"></div>
+          <div class="seek-fill"></div>
+        </div>
+        <div class="seek-thumb"></div>
+        <div class="seek-tip"></div>
+      </div>
+      <div class="row">
+        <div class="group" data-slot="left"></div>
+        <div class="spacer"></div>
+        <div class="group" data-slot="right"></div>
+      </div>
+    </footer>
+
+    <!-- Home. With no video: just the link box. The history button (top left) or Ctrl+H swaps it
+         for the history page; with a video playing, either one drops in over the picture. -->
+    <section id="start">
+      <div id="home">
+        <div id="palette">
+          <label class="field">
+            <span class="field-icon" aria-hidden="true"></span>
+            <input id="link" type="text" placeholder="Paste a YouTube or Twitch link" spellcheck="false" autocomplete="off" />
+            <button class="field-go" id="go" type="button" tabindex="-1" aria-label="Play"></button>
+          </label>
+        </div>
+        <div id="history">
+          <div class="history-head">
+            <button class="btn" id="history-back" type="button" tabindex="-1" data-tip="Back"></button>
+            <span class="history-label">History</span>
+            <div class="tabs" role="tablist"></div>
+            <span class="spacer"></span>
+            <button class="text-btn" id="history-clear" type="button">Clear</button>
+          </div>
+          <div class="history-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <div id="toasts"></div>
+    <div id="popover" hidden></div>
+    <div id="sheet" hidden><div class="sheet-card"></div></div>
+    <div id="drop"><span>Drop to play</span></div>
+    <div id="tip" hidden></div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
