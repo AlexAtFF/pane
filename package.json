@@ -1,0 +1,23 @@
+{
+  "name": "pane",
+  "productName": "Pane",
+  "version": "0.2.8",
+  "description": "A chrome-less YouTube and Twitch player: every window is just the video.",
+  "main": "src/main/main.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "icon": "electron scripts/make-icon.js",
+    "package": "electron-packager . Pane --platform=win32 --arch=x64 --out=dist --overwrite --icon=assets/icon.ico --ignore=\"^/dist\" --ignore=\"^/scripts\" --ignore=\"^/probe\" --ignore=\"^/extension\" --ignore=\"^/docs\"",
+    "install-app": "node scripts/install.js",
+    "release": "npm run package && node scripts/install.js"
+  },
+  "dependencies": {
+    "koffi": "^3.3.7"
+  },
+  "devDependencies": {
+    "@electron/packager": "^20.3.0",
+    "electron": "^45.2.3"
+  }
+}

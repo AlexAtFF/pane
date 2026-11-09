@@ -1,0 +1,14 @@
+# Dependencies and build output
+node_modules/
+dist/
+
+# Probe (test) output: logs and screenshots of whatever was playing
+probe/out/
+probe/out-*.png
+
+# Editor / OS noise
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+*.log
