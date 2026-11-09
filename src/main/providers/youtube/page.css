@@ -1,0 +1,113 @@
+/* Injected into the real YouTube watch page (as a user stylesheet).
+   Goal: nothing on screen except the <video>, filling the whole view.
+   All of YouTube's own player chrome is hidden; Pane draws its own on top. */
+
+html,
+body {
+  background: #000 !important;
+  overflow: hidden !important;
+}
+
+::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Page furniture we never show. display:none also saves YouTube the layout work. */
+#masthead-container,
+#guide,
+tp-yt-app-drawer,
+ytd-mini-guide-renderer,
+#secondary,
+#below,
+#comments,
+#related,
+#panels,
+#chat-container,
+#clarify-box,
+#player-ads,
+#masthead-ad,
+ytd-popup-container,
+tp-yt-iron-overlay-backdrop,
+ytd-consent-bump-v2-lightbox,
+ytd-engagement-panel-section-list-renderer {
+  display: none !important;
+}
+
+/* YouTube's full-page "video unavailable" notice: Pane shows its own message instead. */
+ytd-background-promo-renderer {
+  visibility: hidden !important;
+}
+
+/* The player becomes the page. */
+#movie_player {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 2147483647 !important;
+  background: #000 !important;
+}
+
+#movie_player .html5-video-container {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#movie_player video.html5-main-video {
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+/* Set by agent.js when the window already matches the video's shape (see fit()). */
+html.pane-cover #movie_player video.html5-main-video {
+  object-fit: cover !important;
+}
+
+/* YouTube's own controls, overlays, cards, end screens, branding. */
+#movie_player .ytp-chrome-top,
+#movie_player .ytp-chrome-bottom,
+#movie_player .ytp-gradient-top,
+#movie_player .ytp-gradient-bottom,
+#movie_player .ytp-pause-overlay,
+#movie_player .ytp-pause-overlay-container,
+#movie_player .ytp-ce-element,
+#movie_player .ytp-cards-button,
+#movie_player .ytp-cards-teaser,
+#movie_player .ytp-watermark,
+#movie_player .iv-branding,
+#movie_player .annotation,
+#movie_player .ytp-paid-content-overlay,
+#movie_player .ytp-bezel,
+#movie_player .ytp-bezel-text-wrapper,
+#movie_player .ytp-doubletap-ui,
+#movie_player .ytp-doubletap-ui-legacy,
+#movie_player .ytp-tooltip,
+#movie_player .ytp-spinner,
+#movie_player .ytp-large-play-button,
+#movie_player .ytp-popup,
+#movie_player .ytp-contextmenu,
+#movie_player .html5-endscreen,
+#movie_player .ytp-endscreen-content,
+#movie_player .ytp-autonav-endscreen-countdown-overlay,
+#movie_player .ytp-suggested-action,
+#movie_player .ytp-storyboard-framepreview,
+#movie_player .ytp-player-content.ytp-iv-player-content,
+#movie_player .ytp-overlay-bottom-right,
+#movie_player .ytp-overlay-top-left,
+#movie_player .ytp-fullscreen-grid,
+#movie_player .ytp-error,
+.ytp-contextmenu {
+  display: none !important;
+}
+
+/* Ad overlays stay in the layout (so Pane can tell when "Skip" is ready) but invisible. */
+#movie_player .video-ads,
+#movie_player .ytp-ad-module {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
