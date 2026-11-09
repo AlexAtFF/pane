@@ -1,0 +1,48 @@
+<!doctype html>
+<!-- Test page for the extension's on-page menu (extension/content.js), loaded with the real
+     files and a stand-in for the browser's extension API. Serve the project folder (python -m http.server 8765) and open
+     /probe/menu-test.html. -->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Open in Pane menu test</title>
+    <style>
+      body { background: #0f0f0f; color: #eee; font: 15px system-ui; margin: 0; padding: 30px; }
+      a { display: block; width: 320px; height: 120px; margin-bottom: 24px; padding: 12px; background: #2a2a2a; color: #9cf; }
+    </style>
+  </head>
+  <body>
+    <a id="video" href="https://www.youtube.com/watch?v=aqz-KE-bpKQ">video thumbnail (YouTube)</a>
+    <a id="twitch" href="https://www.twitch.tv/xqc">stream card (Twitch)</a>
+    <a id="other" href="https://www.youtube.com/@Blender">channel link (not a video)</a>
+    <script>
+      window.sent = [];
+      window.clicks = [];
+      window.chrome = { runtime: { sendMessage: (m) => window.sent.push(m) } };
+      // The menu lives in a closed shadow root; keep a handle on it so a test can reach its items.
+      const attach = Element.prototype.attachShadow;
+      Element.prototype.attachShadow = function (options) {
+        window.menuRoot = attach.call(this, options);
+        window.menuHost = this;
+        return window.menuRoot;
+      };
+      window.menuOpen = () => !!(window.menuHost && window.menuHost.isConnected);
+      window.mouse = (el, type, extra = {}) => {
+        const r = el.getBoundingClientRect();
+        const Ctor = type.startsWith('pointer') ? PointerEvent : MouseEvent;
+        const ev = new Ctor(type, { bubbles: true, cancelable: true, composed: true, clientX: r.left + 20, clientY: r.top + 20, button: 0, ...extra });
+        el.dispatchEvent(ev);
+        return ev.defaultPrevented;
+      };
+      window.fullClick = (el) => ['pointerdown', 'mousedown', 'pointerup', 'mouseup', 'click'].map((t) => window.mouse(el, t));
+      for (const a of document.querySelectorAll('a')) {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.clicks.push(a.id);
+        });
+      }
+    </script>
+    <script src="../extension/links.js"></script>
+    <script src="../extension/content.js"></script>
+  </body>
+</html>
